@@ -35,4 +35,59 @@ public class HuffmanTree {
 		
 		root = pQueue.poll();
 	}
+
+    // ----- LOGIC METHODS -----
+    public String encodeLoop (char symbol)
+	{
+		String encoding = "";
+		HNode curHNode = root;
+
+		while (!curHNode.isLeaf())
+		{
+            HNode curLeft = curHNode.getLeft();
+            HNode curRight = curHNode.getRight();
+
+			if (curLeft.contains(symbol)) 
+			{
+				encoding += "0";
+				curHNode = curLeft;
+			} 
+			else
+			{
+				encoding += "1";
+				curHNode = curRight;
+			}
+		}
+		
+		return encoding;
+	}
+
+    public String encode (char symbol)
+	{
+		return encode (symbol, root);
+	}
+
+    private String encode (char symbol, HNode curr)
+	{
+		if (curr.isLeaf())
+		{
+			return "";
+		}
+		
+		else
+		{
+            HNode left = curr.getLeft();
+            HNode right = curr.getRight();
+
+			if (left.contains(symbol))
+			{
+				return "0" + encode (symbol, left);
+			}
+			
+			else
+			{
+				return "1" + encode (symbol, right);
+			}
+		}
+	}
 }
