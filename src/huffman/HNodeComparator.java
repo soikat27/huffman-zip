@@ -16,5 +16,4 @@ public class HNodeComparator implements Comparator<HNode> {
         
         return a.getSymbols().compareTo(b.getSymbols());
     }
-
 }
