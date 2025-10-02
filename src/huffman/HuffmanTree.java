@@ -1,8 +1,10 @@
 package huffman;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.TreeMap;
+import utils.*;
 
 public class HuffmanTree {
     
@@ -116,4 +118,46 @@ public class HuffmanTree {
 
         return curHNode.getSymbol();
     }
+
+    public void writeCode (char symbol, BitOutputStream stream) throws IOException
+	{
+		HNode curHNode = root;
+		
+		while (!curHNode.isLeaf())
+		{
+			HNode curLeft = curHNode.getLeft();
+            HNode curRight = curHNode.getRight();
+
+			if (curLeft.contains(symbol)) 
+			{
+	            stream.writeBit(0);
+	            curHNode = curLeft;
+	        }
+	        else
+	        {
+	        	stream.writeBit(1);
+	            curHNode = curRight;
+	        }
+		}
+	}
+
+	public char readCode (BitInputStream stream) throws IOException
+	{
+		HNode curHNode = root;
+		
+		while (!curHNode.isLeaf())
+		{
+			if (stream.readBit() == 0)
+			{
+				curHNode = curHNode.getLeft();
+			}
+			
+			else
+			{
+				curHNode = curHNode.getRight();
+			}
+		}
+		
+		return curHNode.getSymbol();
+	}
 }
