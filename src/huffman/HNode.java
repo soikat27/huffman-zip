@@ -47,4 +47,31 @@ public class HNode {
     {
         return frequency;
     }
+
+    // ----- LOGIC METHODS -----
+    public boolean isLeaf ()
+	{
+		return left == null && right == null;
+	}
+
+    public boolean contains (char ch)
+	{
+		return symbols.contains("" + ch);
+	}
+
+    public char getSymbol ()
+	{
+		if (!isLeaf())
+		{
+			return '\0';
+		}
+		
+		return symbols.charAt(0);
+	}
+
+    @Override
+    public String toString ()
+	{
+		return symbols + ":" + frequency;
+	}
 }
