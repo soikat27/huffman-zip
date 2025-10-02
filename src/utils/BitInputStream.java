@@ -1,6 +1,5 @@
 // Updated: 03-29-2012
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
