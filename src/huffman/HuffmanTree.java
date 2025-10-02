@@ -90,4 +90,30 @@ public class HuffmanTree {
 			}
 		}
 	}
+
+    public char decode (String code)
+	{
+		HNode curHNode = root;
+
+        for (int i = 0; i < code.length(); i++)
+        {
+            if (curHNode == null) // safety check
+		    {
+			    return '\0';
+		    }
+
+            else if (code.charAt(i) == '0')
+            {
+                curHNode = curHNode.getLeft();
+            }
+
+            else
+			{
+				curHNode = curHNode.getRight();
+			}
+
+        }
+
+        return curHNode.getSymbol();
+    }
 }
