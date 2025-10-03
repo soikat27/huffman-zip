@@ -91,7 +91,7 @@ public class HuffmanZip {
         }
 
 		BitInputStream bitInputStream = new BitInputStream(fileName);
-		TreeMap<Character, Integer> frequencies = (TreeMap<Character, Integer>) bitInputStream.readObject();
+        TreeMap<Character, Integer> frequencies = (TreeMap<Character, Integer>) bitInputStream.readObject();
 
 		HuffmanTree hTree = new HuffmanTree(frequencies);
 
@@ -105,5 +105,38 @@ public class HuffmanZip {
 
 		writer.close();
 		bitInputStream.close();
+	}
+
+    private static void printUsage() 
+    {
+        System.err.println("Invalid argument(s)! Please enter valid argument(s)");
+        System.err.println("Usage:");
+        System.err.println("      java HuffmanZip -encode <fileName>");
+        System.err.println("      java HuffmanZip -decode <fileName>");
+    }
+
+    public static void main (String[] args) throws IOException, ClassNotFoundException
+	{
+		if (args.length != 2)
+		{
+			printUsage();
+			return;
+		}
+
+		String operation = args[0];
+		String fileName = args[1];
+
+		switch (operation.toLowerCase()) 
+        {
+            case "-encode": 
+                encode(fileName);
+                break;
+            case "-decode": 
+                decode(fileName);
+                break;
+            default: 
+                printUsage();
+                break;
+        }
 	}
 }
