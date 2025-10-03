@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"huffman","l":"HNode"},{"p":"huffman","l":"HNodeComparator"},{"p":"huffman","l":"HuffmanTree"},{"p":"huffmanzip","l":"HuffmanZip"}];updateSearchResults();

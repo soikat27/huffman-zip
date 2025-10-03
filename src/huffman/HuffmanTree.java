@@ -6,11 +6,27 @@ import java.util.PriorityQueue;
 import java.util.TreeMap;
 import utils.*;
 
+/**
+ * Represents a Huffman Tree for encoding and decoding characters
+ * based on their frequency in a given dataset.
+ * 
+ * <p>
+ * The tree is constructed from a map of character frequencies. Leaf nodes
+ * store individual characters, while internal nodes represent merged
+ * frequencies of their children. Encoding and decoding operations are
+ * supported both iteratively and recursively.
+ * </p>
+ */
 public class HuffmanTree {
     
+	/** Root node of the Huffman Tree */
     private HNode root;
 
-    // Huffman Tree construction
+    /**
+     * Constructs a Huffman Tree from character frequencies.
+     *
+     * @param frequencies map of characters to their corresponding frequencies
+     */
     public HuffmanTree (TreeMap<Character, Integer> frequencies)
 	{
 		PriorityQueue<HNode> pQueue = new PriorityQueue<> (new HNodeComparator());
@@ -39,6 +55,13 @@ public class HuffmanTree {
 	}
 
     // ----- LOGIC METHODS -----
+
+	/**
+     * Iteratively encodes a symbol into its binary string representation.
+     *
+     * @param symbol character to encode
+     * @return binary string representing the symbol
+     */
     public String encodeLoop (char symbol)
 	{
 		String encoding = "";
@@ -64,6 +87,12 @@ public class HuffmanTree {
 		return encoding;
 	}
 
+	/**
+     * Recursively encodes a symbol into its binary string representation.
+     *
+     * @param symbol character to encode
+     * @return binary string representing the symbol
+     */
     public String encode (char symbol)
 	{
 		return encode (symbol, root);
@@ -93,6 +122,12 @@ public class HuffmanTree {
 		}
 	}
 
+	/**
+     * Decodes a binary string into the corresponding character.
+     *
+     * @param code binary string to decode
+     * @return decoded character, or '\0' if invalid
+     */
     public char decode (String code)
 	{
 		HNode curHNode = root;
@@ -119,6 +154,13 @@ public class HuffmanTree {
         return curHNode.getSymbol();
     }
 
+	/**
+     * Writes the Huffman code for a character to a BitOutputStream.
+     *
+     * @param symbol character to encode
+     * @param stream BitOutputStream to write bits into
+     * @throws IOException if an I/O error occurs
+     */
     public void writeCode (char symbol, BitOutputStream stream) throws IOException
 	{
 		HNode curHNode = root;
@@ -141,6 +183,13 @@ public class HuffmanTree {
 		}
 	}
 
+	/**
+     * Reads the next character from a BitInputStream based on Huffman coding.
+     *
+     * @param stream BitInputStream to read bits from
+     * @return decoded character
+     * @throws IOException if an I/O error occurs
+     */
 	public char readCode (BitInputStream stream) throws IOException
 	{
 		HNode curHNode = root;

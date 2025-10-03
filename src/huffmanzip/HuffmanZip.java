@@ -11,6 +11,18 @@ import huffman.HuffmanTree;
 import utils.BitInputStream;
 import utils.BitOutputStream;
 
+/**
+ * HuffmanZip is a utility class for compressing and decompressing files
+ * using Huffman Encoding. It provides methods to
+ * encode files to a compressed binary format, and decode them back to their
+ * original content.
+ * 
+ * <pre>
+ * Usage:
+ * java HuffmanZip -encode &lt;fileName&gt;
+ * java HuffmanZip -decode &lt;fileName&gt;
+ * </pre>
+ */
 public class HuffmanZip {
 
     private static TreeMap<Character, Integer> buildFrequencies (String fileName) throws IOException
@@ -34,6 +46,13 @@ public class HuffmanZip {
 		return frequencies;
 	}
 
+	/**
+     * Encodes the specified file using Huffman encoding and writes the compressed
+     * binary output to a file with ".hz" extension.
+     * 
+     * @param fileName The path of the file to encode
+     * @throws IOException If there is an error reading the file or writing output
+     */
     public static void encode(String fileName) throws IOException
 	{
 		TreeMap<Character, Integer> frequencies = buildFrequencies(fileName);
@@ -61,10 +80,24 @@ public class HuffmanZip {
 		bitOutputStream.close();
 	}
 
+	/**
+     * Decodes a previously Huffman-encoded file (with ".hz" extension) and writes
+     * the decoded output to a file with the original name. If a file with the
+     * decoded name already exists, prompts the user to overwrite or abort.
+     * 
+     * @param fileName The path of the file to decode
+     * @throws IOException            If there is an error reading or writing files
+     * @throws ClassNotFoundException If the frequency map object cannot be read
+     */
     public static void decode(String fileName) throws IOException, ClassNotFoundException
 	{
-		String decodedFile = fileName.replace(".hz", "");
+		if (!fileName.endsWith(".hz"))
+		{
+			System.err.println("Error: not a .hz file. The program aborts!");
+			return;
+		}
 
+		String decodedFile = fileName.replace(".hz", "");
         File outputFile = new File (decodedFile);
 
         if (outputFile.exists())
@@ -91,7 +124,8 @@ public class HuffmanZip {
         }
 
 		BitInputStream bitInputStream = new BitInputStream(fileName);
-        TreeMap<Character, Integer> frequencies = (TreeMap<Character, Integer>) bitInputStream.readObject();
+        @SuppressWarnings("unchecked")
+		TreeMap<Character, Integer> frequencies = (TreeMap<Character, Integer>) bitInputStream.readObject();
 
 		HuffmanTree hTree = new HuffmanTree(frequencies);
 
@@ -115,6 +149,13 @@ public class HuffmanZip {
         System.err.println("      java HuffmanZip -decode <fileName>");
     }
 
+	/**
+     * Main entry point for HuffmanZip.
+     * 
+     * @param args Command-line arguments: operation (-encode or -decode) and file name
+     * @throws IOException            If an I/O error occurs
+     * @throws ClassNotFoundException If the frequency map cannot be read from file
+     */
     public static void main (String[] args) throws IOException, ClassNotFoundException
 	{
 		if (args.length != 2)
