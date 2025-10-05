@@ -102,7 +102,7 @@ java -jar dist/HuffmanZip.jar -decode <your_file>
 
 JUnit tests are available in the `test/` folder.
 
-#### 1. Compile JUnit tests:
+#### 2. Compile JUnit tests:
 
 ```
 javac -cp "bin:junit-4.13.2.jar:hamcrest-core-1.3.jar" -d bin test/huffman/*.java
